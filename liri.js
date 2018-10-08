@@ -16,13 +16,15 @@ for (let i = 3; i < input.length; i++) {
 
 input[3] = combined;
 
+newLog();
+
 parse(input[2], input[3])
 
 function findConcert(artist) {
     var toLog = artist
     var stringArr = artist.trim().split(" ");
     artist = ''
-    
+
 
     for (let i = 0; i < stringArr.length; i++) {
         if (i == 0) {
@@ -55,6 +57,14 @@ Date: ${moment(new Date(data[i].datetime)).format("MM-DD-YYYY")}
     })
 }
 
+function newLog() {
+    fs.writeFile("log.txt", "", function (err) {
+        if (err) {
+            return console.log(err);
+        }
+    });
+}
+
 
 function findMovie(movieName) {
 
@@ -67,7 +77,7 @@ function findMovie(movieName) {
     req(queryUrl, function (e, req, body) {
         if (e) { console.log(e) } else {
             let data = JSON.parse(body)
-            
+
             var toString = `
 ====================Movie==============================
 Title: ${data.Title}
@@ -149,10 +159,10 @@ function random() {
         input: require('fs').createReadStream('random.txt')
     });
 
-    lineReader.on('line', function (line) {       
+    lineReader.on('line', function (line) {
         console.log(line);
         var dataArr = line.split(",");
-        dataArr[1] = dataArr[1].replace(/"/g,"");
+        dataArr[1] = dataArr[1].replace(/"/g, "");
         parse(dataArr[0], dataArr[1]);
     });
 }
