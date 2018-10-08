@@ -77,13 +77,19 @@ function findMovie(movieName) {
     req(queryUrl, function (e, req, body) {
         if (e) { console.log(e) } else {
             let data = JSON.parse(body)
-
+            var tomatoes ='';
+            for(let i = 0; i < data.Ratings.length; i++){
+                if(data.Ratings[i].Source.includes('omatoes')){
+                    tomatoes = data.Ratings[i].Value;
+                }
+            }
+            
             var toString = `
 ====================Movie==============================
 Title: ${data.Title}
 Year: ${data.Year}
 IMDB Rating: ${data.imdbRating}
-Rotten Tomatoes Rating:
+Rotten Tomatoes Rating: ${(tomatoes != '')?tomatoes:'no rating'}
 Country: ${data.Country}
 Language: ${data.Language}
 Plot: ${data.Plot}
